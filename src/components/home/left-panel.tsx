@@ -1,14 +1,17 @@
-import {
-  ListFilter,
-  LogOut,
-  MessageSquareDiff,
-  Search,
-  User,
-} from "lucide-react";
+"use client";
+
+import { ListFilter, LogOut, MessageSquareDiff, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import ThemeSwitch from "./theme-switch";
 import { conversations } from "@/dummy-data/db";
 import Conversation from "./conversation";
+import {
+  SignedIn,
+  SignedOut,
+  SignIn,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 const LeftPanel = () => {
   return (
@@ -16,10 +19,16 @@ const LeftPanel = () => {
       <div className="sticky top-0 bg-left-panel z-10">
         {/* Header */}
         <div className="flex justify-between bg-gray-primary p-3 items-center">
-          <User size={24} />
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
 
+          <SignedOut>
+            <SignIn />
+          </SignedOut>
           <div className="flex items-center gap-3">
-            <MessageSquareDiff size={20} />{" "}
+            <MessageSquareDiff size={20} />
+
             {/* TODO: This line will be replaced with <UserListDialog /> */}
             <ThemeSwitch />
             <LogOut size={20} className="cursor-pointer" />

@@ -18,8 +18,9 @@ export const conversations = [
   {
     _id: "2",
     admin: null,
-    groupImage: "https://avatars.githubusercontent.com/u/75279146?v=4",
-    groupName: null,
+    groupImage:
+      "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvdXBsb2FkZWQvaW1nXzJqMFJxR1gwRlAzMEhDZE03ZXBYVmtMcGxSNyJ9",
+    groupName: "Bois Masti",
     participants: ["user4", "user5"],
     _creationTime: 1638235872, // Unix timestamp for 2021-11-30 13:04:32 UTC
     lastMessage: {
