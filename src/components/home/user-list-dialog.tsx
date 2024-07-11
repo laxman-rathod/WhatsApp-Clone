@@ -78,7 +78,7 @@ const UserListDialog = () => {
         : users?.find((user) => user._id === selectedUsers[0])?.name;
 
       setSelectedConversation({
-        _id: conversationId as Id<"conversations">,
+        _id: conversationId,
         participants: selectedUsers,
         isGroup,
         image: isGroup

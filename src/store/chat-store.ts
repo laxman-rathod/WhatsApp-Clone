@@ -2,7 +2,7 @@ import { Id } from "../../convex/_generated/dataModel";
 import { create } from "zustand";
 
 export type Conversation = {
-  _id: Id<"conversations">;
+  _id: any;
   image?: string;
   participants: Id<"users">[];
   isGroup: boolean;
