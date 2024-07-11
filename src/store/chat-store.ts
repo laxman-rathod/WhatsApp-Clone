@@ -2,7 +2,6 @@ import { Id } from "../../convex/_generated/dataModel";
 import { create } from "zustand";
 
 export type Conversation = {
-  // _id: Id<"conversations">; // TODO: Remove these types and add original one
   _id: any;
   image?: string;
   participants: Id<"users">[];
@@ -13,10 +12,8 @@ export type Conversation = {
   admin?: Id<"users">;
   isOnline?: boolean;
   lastMessage?: {
-    // _id: Id<"messages">;
-    _id: any;
-    // conversation: Id<"conversations">;
-    conversation: any;
+    _id: Id<"messages">;
+    conversation: Id<"conversations">;
     content: string;
     sender: Id<"users">;
   };
