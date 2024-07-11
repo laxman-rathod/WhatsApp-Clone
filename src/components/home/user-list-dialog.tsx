@@ -73,13 +73,12 @@ const UserListDialog = () => {
       setGroupName("");
       setSelectedImage(null);
 
-      // TODO => Update a global state called "selectedConversation"
       const conversationName = isGroup
         ? groupName
         : users?.find((user) => user._id === selectedUsers[0])?.name;
 
       setSelectedConversation({
-        _id: conversationId,
+        _id: conversationId as Id<"conversations">,
         participants: selectedUsers,
         isGroup,
         image: isGroup
