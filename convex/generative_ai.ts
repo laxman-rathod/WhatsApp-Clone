@@ -50,6 +50,7 @@ export const dall_e = action({
         n: 1,
         size: "1024x1024",
       });
+
       const imageUrl = res.data[0].url;
       await ctx.runMutation(api.messages.sendAIMessage, {
         content: imageUrl ?? "/poopenai.png",
