@@ -60,7 +60,6 @@ export const sendTextMessage = mutation({
     }
   },
 });
-
 export const sendAIMessage = mutation({
   args: {
     content: v.string(),

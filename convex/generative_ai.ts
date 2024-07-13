@@ -57,6 +57,7 @@ export const dall_e = action({
         conversation: args.conversation,
         messageType: "image",
       });
+      
     } catch (error: any) {
       await ctx.runMutation(api.messages.sendAIMessage, {
         content: "An error occurred while generating the image.",
