@@ -5,9 +5,7 @@ import { v } from "convex/values";
 import { api } from "./_generated/api";
 import OpenAI from "openai";
 
-const apiKey =
-  process.env.OPENAI_API_KEY ||
-  "sk-None-7zoPDWnHV8gLay9BKHcbT3BlbkFJvY8sKzHsM22SLQStOj0H";
+const apiKey = process.env.OPENAI_API_KEY;
 const openai = new OpenAI({ apiKey });
 
 export const chat = action({
