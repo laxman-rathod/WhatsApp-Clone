@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription } from "../ui/dialog";
 import ReactPlayer from "react-player";
 import ChatAvatarAction from "./chat-avatar-actions";
+import { Bot } from "lucide-react";
 
 interface ChatBubbleProps {
   message: IMessage;
@@ -22,11 +23,16 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
 
   const { selectedConversation } = useConversationStore();
   const isMember =
-    selectedConversation?.participants.includes(message.sender._id) || false;
+    selectedConversation?.participants.includes(message.sender?._id) || false;
   const isGroup = selectedConversation?.isGroup;
-  const fromMe = message.sender._id === me._id;
-  const bgClass = fromMe ? "bg-green-chat" : "bg-white dark:bg-gray-primary";
-
+  const fromMe = message.sender?._id === me._id;
+  const fromAI = message.sender?.name === "Gemini";
+  const bgClass = fromMe
+    ? "bg-green-chat"
+    : !fromAI
+      ? "bg-white dark:bg-gray-primary"
+      : "bg-blue-500 text-white";
+  console.log(message.sender);
   const [open, setOpen] = useState(false);
   const renderMessageContent = () => {
     switch (message.messageType) {
@@ -52,12 +58,16 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
             isGroup={isGroup}
             isMember={isMember}
             message={message}
+            fromAI={fromAI}
           />
           <div
             className={`flex flex-col z-20 max-w-fit px-2 pt-1 rounded-md shadow-md relative ${bgClass}`}
           >
-            <OtherMessageIndicator />
-            {isGroup && <ChatAvatarAction message={message} me={me} />}
+            {!fromAI && <OtherMessageIndicator />}
+            {fromAI && (
+              <Bot size={16} className="absolute bottom-[2px] left-2" />
+            )}
+            <ChatAvatarAction message={message} me={me} />
             {renderMessageContent()}
             {open && (
               <ImageDialog

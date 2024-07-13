@@ -4,8 +4,6 @@ import { Ban, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 import { api } from "../../../convex/_generated/api";
 
-// TODO: Repeat the fucking code you have done.
-
 type ChatAvatarActionsProps = {
   message: IMessage;
   me: any;
@@ -21,8 +19,10 @@ const ChatAvatarActions = ({ message, me }: ChatAvatarActionsProps) => {
   const kickUser = useMutation(api.conversations.kickUser);
   const createConversation = useMutation(api.conversations.createConversation);
   const isGroup = selectedConversation?.isGroup;
+  const fromAI = message.sender?.name === "Gemini";
 
   const handleKickUser = async (e: React.MouseEvent) => {
+    if (fromAI) return;
     e.stopPropagation();
     if (!selectedConversation) return;
     try {
@@ -43,6 +43,7 @@ const ChatAvatarActions = ({ message, me }: ChatAvatarActionsProps) => {
   };
 
   const handleCreateConversation = async () => {
+    if (fromAI) return;
     try {
       const conversationId = await createConversation({
         isGroup: false,
@@ -67,9 +68,11 @@ const ChatAvatarActions = ({ message, me }: ChatAvatarActionsProps) => {
       className="text-[11px] flex gap-4 justify-between font-bold cursor-pointer group"
       onClick={handleCreateConversation}
     >
-      {isGroup && message.sender.name}
+      {message.sender.name}
 
-      {isGroup && !isMember && <Ban size={16} className="text-red-500" />}
+      {isGroup && !fromAI && !isMember && (
+        <Ban size={16} className="text-red-500" />
+      )}
       {isGroup && isMember && selectedConversation?.admin === me._id && (
         <LogOut
           size={16}

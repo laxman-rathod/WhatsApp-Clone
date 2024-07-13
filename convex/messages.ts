@@ -1,5 +1,6 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { api } from "./_generated/api";
 
 export const sendTextMessage = mutation({
   args: {
@@ -45,6 +46,26 @@ export const sendTextMessage = mutation({
     });
 
     // TODO: Add @Gemini here
+    if (args.content.startsWith("@gemini")) {
+      await ctx.scheduler.runAfter(0, api.gemini.chat, {
+        messageBody: args.content,
+        conversation: args.conversation,
+      });
+    }
+  },
+});
+export const sendGeminiMessage = mutation({
+  args: {
+    content: v.string(),
+    conversation: v.id("conversations"),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("messages", {
+      content: args.content,
+      sender: "Gemini", // TODO: Review that.
+      messageType: "text",
+      conversation: args.conversation,
+    });
   },
 });
 
@@ -69,6 +90,12 @@ export const getMessages = query({
 
     const messagesWithSender = await Promise.all(
       messages.map(async (message) => {
+        if (message.sender === "Gemini") {
+          return {
+            ...message,
+            sender: { name: "Gemini", image: "/gemini.svg" },
+          };
+        }
         let sender;
         // Check if sender profile is in cache
         if (userProfileCache.has(message.sender)) {
