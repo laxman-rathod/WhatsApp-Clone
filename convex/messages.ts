@@ -45,25 +45,33 @@ export const sendTextMessage = mutation({
       messageType: "text",
     });
 
-    // TODO: Add @Gemini here
     if (args.content.startsWith("@gemini")) {
-      await ctx.scheduler.runAfter(0, api.gemini.chat, {
+      await ctx.scheduler.runAfter(0, api.generative_ai.chat, {
+        messageBody: args.content,
+        conversation: args.conversation,
+      });
+    }
+
+    if (args.content.startsWith("@dall-e")) {
+      await ctx.scheduler.runAfter(0, api.generative_ai.dall_e, {
         messageBody: args.content,
         conversation: args.conversation,
       });
     }
   },
 });
-export const sendGeminiMessage = mutation({
+
+export const sendAIMessage = mutation({
   args: {
     content: v.string(),
     conversation: v.id("conversations"),
+    messageType: v.union(v.literal("text"), v.literal("image")),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("messages", {
       content: args.content,
-      sender: "Gemini", // TODO: Review that.
-      messageType: "text",
+      sender: "Gemini",
+      messageType: args.messageType,
       conversation: args.conversation,
     });
   },
@@ -91,9 +99,11 @@ export const getMessages = query({
     const messagesWithSender = await Promise.all(
       messages.map(async (message) => {
         if (message.sender === "Gemini") {
+          const image =
+            message.messageType === "text" ? "/gemini.svg" : "/dall-e.png";
           return {
             ...message,
-            sender: { name: "Gemini", image: "/gemini.svg" },
+            sender: { name: "Gemini", image: image },
           };
         }
         let sender;
