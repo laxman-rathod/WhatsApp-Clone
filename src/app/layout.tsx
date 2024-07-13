@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "WhatsApp - clone",
   description: "WhatsApp clone",
+  icons: {
+    icon: "/whatsapp.png",
+  },
 };
 
 export default function RootLayout({
