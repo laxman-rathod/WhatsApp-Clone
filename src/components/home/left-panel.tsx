@@ -1,15 +1,15 @@
 "use client";
-
-import { ListFilter, LogOut, Search } from "lucide-react";
+import { ListFilter, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import ThemeSwitch from "./theme-switch";
 import Conversation from "./conversation";
 import { UserButton } from "@clerk/nextjs";
+
 import UserListDialog from "./user-list-dialog";
 import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useConversationStore } from "@/store/chat-store";
 import { useEffect } from "react";
+import { useConversationStore } from "@/store/chat-store";
 
 const LeftPanel = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -20,29 +20,32 @@ const LeftPanel = () => {
 
   const { selectedConversation, setSelectedConversation } =
     useConversationStore();
+
   useEffect(() => {
-    const conversationsIds = conversations?.map(
+    const conversationIds = conversations?.map(
       (conversation) => conversation._id
     );
     if (
       selectedConversation &&
-      conversationsIds &&
-      !conversationsIds.includes(selectedConversation._id)
+      conversationIds &&
+      !conversationIds.includes(selectedConversation._id)
     ) {
       setSelectedConversation(null);
     }
   }, [conversations, selectedConversation, setSelectedConversation]);
+
   if (isLoading) return null;
+
   return (
     <div className="w-1/4 border-gray-600 border-r">
       <div className="sticky top-0 bg-left-panel z-10">
         {/* Header */}
         <div className="flex justify-between bg-gray-primary p-3 items-center">
           <UserButton />
+
           <div className="flex items-center gap-3">
             {isAuthenticated && <UserListDialog />}
             <ThemeSwitch />
-            <LogOut size={20} className="cursor-pointer" />
           </div>
         </div>
         <div className="p-3 flex items-center">

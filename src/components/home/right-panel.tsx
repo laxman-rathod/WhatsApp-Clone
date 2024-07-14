@@ -21,7 +21,7 @@ const RightPanel = () => {
     selectedConversation.groupName || selectedConversation.name;
   const conversationImage =
     selectedConversation.groupImage || selectedConversation.image;
-
+  const isOnline = selectedConversation.isOnline || false;
   return (
     <div className="w-3/4 flex flex-col">
       <div className="w-full sticky top-0 z-50">
@@ -39,10 +39,14 @@ const RightPanel = () => {
             </Avatar>
             <div className="flex flex-col">
               <p>{conversationName}</p>
-              {selectedConversation.isGroup && (
-                <GroupMembersDialog
-                  selectedConversation={selectedConversation}
-                />
+              {isOnline ? (
+                <p className="text-[0.66rem]">Online</p>
+              ) : (
+                selectedConversation.isGroup && (
+                  <GroupMembersDialog
+                    selectedConversation={selectedConversation}
+                  />
+                )
               )}
             </div>
           </div>
