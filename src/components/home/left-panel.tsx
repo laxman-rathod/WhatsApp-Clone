@@ -4,7 +4,7 @@ import { ListFilter, LogOut, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import ThemeSwitch from "./theme-switch";
 import Conversation from "./conversation";
-import { SignedIn, SignedOut, SignIn, UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import UserListDialog from "./user-list-dialog";
 import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";

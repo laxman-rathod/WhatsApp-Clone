@@ -17,7 +17,7 @@ export const chat = action({
     try {
       const { text } = await generateText({
         model: google("models/gemini-1.5-flash-latest"),
-        prompt: `You are a terse bot in a group chat responding to questions with their answers. \n\n ${args.messageBody}`,
+        prompt: args.messageBody,
       });
 
       const messageContent = text;
