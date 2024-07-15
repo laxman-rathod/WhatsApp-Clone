@@ -41,7 +41,7 @@ This project is a WhatsApp clone built using Next.js, Convex, and TypeScript, de
 - **Database:** Convex (Built-in database)
 - **API:** Google Generative AI, OpenAI DALL-E-3, ZegoCloud
 - **Authentication:** Clerk Auth
-  **Real-time Video Calling:** ZegoCloud
+- **Real-time Video Calling:** ZegoCloud
 
 ## Deployment 🪴
 
